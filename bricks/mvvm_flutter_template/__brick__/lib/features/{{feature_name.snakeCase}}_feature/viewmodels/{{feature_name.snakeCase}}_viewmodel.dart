@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../models/{{feature_name.snakeCase}}_model.dart';
 import '../models/{{feature_name.snakeCase}}_api.dart';
 
-part '{{feature_name.snakeCase}}_viewmodel.g.dart';
+part '{{feature_name.snakeCase}}_feature_viewmodel.g.dart';
 
 @riverpod
 class {{ feature_name.pascalCase() }}ViewModel extends _${{ feature_name.pascalCase() }}ViewModel {
