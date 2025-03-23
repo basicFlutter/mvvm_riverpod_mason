@@ -50,36 +50,45 @@ dart pub global activate mason_cli
 
 ### اضافه کردن قالب به پروژه
 فایل `mason.yaml` را در ریشه پروژه ایجاد کنید و یکی از کدهای زیر را با توجه به نیاز پروژه در آن قرار دهید.
- 
+
+#### توجه : در صورت نیاز به Overwrite pubspec.yaml? (Yyna) گزینه Y رو انتخاب کنید تا کتابخانه های مورد نیاز به پروژه اضافه شود.
+#### هشدار : در صورت Overwrite pubspec.yaml کردن pubspec جدید جایگزین pubspec قدیمی میشود.
 ```yaml
 bricks:
-  mvvm_flutter_template:
+  mvvm_feature:
     git:
       url: https://github.com/basicFlutter/mvvm_riverpod_mason.git
-      path: bricks/mvvm_flutter_template
+      path: bricks/mvvm_feature
   mvvm_riverpod_base:
     git:
       url: https://github.com/basicFlutter/mvvm_riverpod_mason.git
       path: bricks/mvvm_riverpod_base
 ```
-1. ابتدا فایل های مورد نیاز پروژه و ساختار پروژه رو اضافه کنید :
-```bash
-mason make mvvm_riverpod_base --project_name "example" --organization "MyCompany" --description "A new Flutter application with MVVM architecture"
-```
 
-2. و با دستور زیر میتوانید یک فیچر جدید اضافه کنید :
-```bash
-mason make mvvm_flutter_template --project_name="example" --name="user" --package_name="com.example.example"  
-```
 
-3. وابستگی‌های پروژه را نصب کنید:
+1. ابتدا فایل های مورد نیاز پروژه و ساختار پروژه رو اضافه کنید(فقط یکبار این دستور را اجرا کنید) :
+```bash
+mason make mvvm_riverpod_base --project_name="your project name"
+```
+2. وابستگی‌های پروژه را نصب کنید:
 ```bash
 flutter pub get
 ```
 
-4. کدهای تولید شده را بسازید:
+3. کدهای تولید شده را بسازید :
 ```bash
-flutter pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
+```
+
+4. و با دستور زیر میتوانید یک فیچر جدید اضافه کنید :
+```bash
+mason make mvvm_feature --name="your feature name"    
+```
+
+
+5. کدهای تولید شده را بسازید(بعد از ایجاد هر فیچر باید این دستور اجرا شود):
+```bash
+dart run build_runner build --delete-conflicting-outputs
 ```
 
 ## وابستگی‌های اصلی
