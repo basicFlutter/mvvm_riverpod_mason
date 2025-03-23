@@ -105,6 +105,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   logger: ^2.0.2+1
   equatable: ^2.0.5
+  flutter_screenutil: ^5.9.0
 
 dev_dependencies:
   flutter_test:
