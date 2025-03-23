@@ -26,17 +26,9 @@ environment:
 #  * a list of values (enums only)
 #  * an optional separator (list only)
 vars:
-  project_name:
-    type: string
-    description: نام پروژه فلاتر
-    prompt: نام پروژه فلاتر چیست؟
-  feature_name:
+
+  name:
     type: string
     description: نام ویژگی یا ماژول مورد نظر
     prompt: نام ویژگی یا ماژول چیست؟
     default: home
-  package_name:
-    type: string
-    description: نام پکیج برای پروژه (به صورت com.example.project)
-    prompt: نام پکیج پروژه چیست؟
-    default: com.example.app

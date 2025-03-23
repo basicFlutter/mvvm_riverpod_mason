@@ -69,7 +69,7 @@ mason make mvvm_riverpod_base --project_name "example" --organization "MyCompany
 
 2. و با دستور زیر میتوانید یک فیچر جدید اضافه کنید :
 ```bash
-mason make mvvm_flutter_template --project_name="example" --feature_name="user" --package_name="com.example.example"  
+mason make mvvm_flutter_template --project_name="example" --name="user" --package_name="com.example.example"  
 ```
 
 3. وابستگی‌های پروژه را نصب کنید:
@@ -134,7 +134,7 @@ lib/
 │           ├── context_extensions.dart
 │           └── string_extensions.dart
 └── features/
-    └── feature_name/
+    └──name/
         ├── models/
         ├── viewModels/
         └── view/

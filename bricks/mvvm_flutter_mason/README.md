@@ -48,7 +48,7 @@ lib/
 │   ├── network/
 │   └── utils/
 ├── features/
-│   └── feature_name/
+│   └──name/
 │       ├── data/
 │       │   ├── datasources/
 │       │   ├── models/

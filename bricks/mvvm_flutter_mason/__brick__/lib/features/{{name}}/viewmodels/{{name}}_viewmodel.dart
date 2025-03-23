@@ -1,22 +1,22 @@
 // ViewModel مربوط به ویژگی با استفاده از Riverpod Generator
 import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../models/{{feature_name.snakeCase}}_model.dart';
-import '../models/{{feature_name.snakeCase}}_api.dart';
+import '../models/{{name}}_model.dart';
+import '../models/{{name}}_api.dart';
 
-part '{{feature_name.snakeCase}}_feature_viewmodel.g.dart';
+part '{{name}}_viewmodel.g.dart';
 
 @riverpod
-class {{ feature_name.pascalCase() }}ViewModel extends _${{ feature_name.pascalCase() }}ViewModel {
+class {{name.pascalCase()}}ViewModel extends _${{name.pascalCase()}}ViewModel {
   @override
-  FutureOr<List<{{ feature_name.pascalCase() }}Model>> build() async {
+  FutureOr<List<{{name.pascalCase()}}Model>> build() async {
     return [];
   }
 
   Future<void> loadAll() async {
     state = const AsyncLoading();
     try {
-      final api = ref.read({{ feature_name.camelCase() }}ApiProvider);
+      final api = ref.read({{name.camelCase()}}ApiProvider);
       final result = await api.getAll();
       state = AsyncData(result);
     } catch (error, stackTrace) {
@@ -24,10 +24,10 @@ class {{ feature_name.pascalCase() }}ViewModel extends _${{ feature_name.pascalC
     }
   }
 
-  Future<void> create({{ feature_name.pascalCase() }}Model model) async {
+  Future<void> create({{name.pascalCase()}}Model model) async {
     state = const AsyncLoading();
     try {
-      final api = ref.read({{ feature_name.camelCase() }}ApiProvider);
+      final api = ref.read({{name.camelCase()}}ApiProvider);
       await api.create(model);
       final result = await api.getAll();
       state = AsyncData(result);
@@ -36,10 +36,10 @@ class {{ feature_name.pascalCase() }}ViewModel extends _${{ feature_name.pascalC
     }
   }
 
-  Future<void> updateItem(int id, {{ feature_name.pascalCase() }}Model model) async {
+  Future<void> updateItem(int id, {{name.pascalCase()}}Model model) async {
     state = const AsyncLoading();
     try {
-      final api = ref.read({{ feature_name.camelCase() }}ApiProvider);
+      final api = ref.read({{name.camelCase()}}ApiProvider);
       await api.update(id, model);
       final result = await api.getAll();
       state = AsyncData(result);
@@ -51,7 +51,7 @@ class {{ feature_name.pascalCase() }}ViewModel extends _${{ feature_name.pascalC
   Future<void> delete(int id) async {
     state = const AsyncLoading();
     try {
-      final api = ref.read({{ feature_name.camelCase() }}ApiProvider);
+      final api = ref.read({{name.camelCase()}}ApiProvider);
       await api.delete(id);
       final result = await api.getAll();
       state = AsyncData(result);
