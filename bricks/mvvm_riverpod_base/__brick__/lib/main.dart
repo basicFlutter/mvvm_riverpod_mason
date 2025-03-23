@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mvvm_riverpod_base/app/app.dart';
-import 'package:mvvm_riverpod_base/core/theme/app_theme.dart';
-import 'package:mvvm_riverpod_base/core/translations/app_translations.dart';
-import 'package:mvvm_riverpod_base/core/theme/theme_provider.dart';
-import 'package:mvvm_riverpod_base/core/language/language_provider.dart';
+import 'core/language/language_provider.dart';
+import 'core/theme/theme_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
