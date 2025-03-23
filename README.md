@@ -106,6 +106,7 @@ dependencies:
   logger: ^2.0.2+1
   equatable: ^2.0.5
   flutter_screenutil: ^5.9.0
+  flutter_secure_storage: ^9.2.4
 
 dev_dependencies:
   flutter_test:
@@ -241,6 +242,77 @@ context.isDesktop
 "test".toPersianNumber
 "1000".toCurrency()
 ```
+
+## نحوه استفاده از مدیریت توکن و Secure Storage
+
+این قالب از سیستم مدیریت توکن با استفاده از Riverpod و Secure Storage استفاده می‌کند. برای استفاده از سیستم مدیریت توکن در برنامه:
+
+```dart
+// دریافت توکن‌ها
+final tokens = ref.watch(tokenProvider);
+
+// ذخیره توکن‌های جدید
+await ref.read(tokenProvider.notifier).setTokens(
+  accessToken: 'new_access_token',
+  refreshToken: 'new_refresh_token',
+);
+
+// پاک کردن توکن‌ها
+await ref.read(tokenProvider.notifier).clearTokens();
+
+// رفرش کردن توکن دسترسی
+await ref.read(tokenProvider.notifier).refreshAccessToken('new_access_token');
+```
+
+### تنظیمات Auth Interceptor
+
+برای تنظیم refresh token، باید کد مربوط به درخواست refresh token را در `auth_interceptor.dart` پیاده‌سازی کنید:
+
+```dart
+// در auth_interceptor.dart
+if (err.response?.statusCode == 401) {
+  try {
+    final tokens = await ref.read(tokenProvider.future);
+    if (tokens.refreshToken != null) {
+      // ارسال درخواست refresh token به سرور
+      final response = await dio.post('/refresh-token', 
+        data: {'refresh_token': tokens.refreshToken}
+      );
+      
+      // ذخیره توکن جدید
+      await ref.read(tokenProvider.notifier).refreshAccessToken(
+        response.data['access_token']
+      );
+      
+      // تکرار درخواست اصلی
+      final newTokens = await ref.read(tokenProvider.future);
+      err.requestOptions.headers['Authorization'] = 'Bearer ${newTokens.accessToken}';
+      final response = await Dio().fetch(err.requestOptions);
+      return handler.resolve(response);
+    }
+  } catch (e) {
+    // در صورت خطا در refresh token، کاربر را logout کنید
+    await ref.read(tokenProvider.notifier).clearTokens();
+    // TODO: Navigate to login screen
+  }
+}
+```
+
+### مزایای استفاده از Riverpod برای مدیریت توکن
+
+1. **مدیریت State متمرکز**: تمام state مربوط به توکن‌ها در یک جا مدیریت می‌شود
+2. **Reactive Updates**: هر تغییری در توکن‌ها به صورت خودکار به تمام قسمت‌های برنامه که از آن استفاده می‌کنند منتقل می‌شود
+3. **Caching**: توکن‌ها در حافظه cache می‌شوند و نیازی به خواندن مکرر از storage نیست
+4. **Testability**: تست کردن کد راحت‌تر می‌شود
+5. **Type Safety**: با استفاده از Riverpod، type safety بیشتری داریم
+
+### نکات مهم
+
+- توکن‌ها به صورت امن در `flutter_secure_storage` ذخیره می‌شوند
+- در صورت دریافت خطای 401 (Unauthorized)، سیستم به طور خودکار سعی می‌کند از refresh token استفاده کند
+- اگر refresh token هم منقضی شده باشد، توکن‌ها پاک می‌شوند و کاربر باید دوباره لاگین کند
+- تمام درخواست‌ها به طور خودکار با توکن دسترسی ارسال می‌شوند
+- برای استفاده از این سیستم، حتماً باید `flutter_secure_storage` را به وابستگی‌های پروژه اضافه کنید
 
 ## تنظیمات
 

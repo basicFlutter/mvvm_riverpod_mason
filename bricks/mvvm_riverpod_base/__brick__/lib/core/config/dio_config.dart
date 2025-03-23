@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:riverpod/riverpod.dart';
 import '../network/interceptors/auth_interceptor.dart';
 import '../network/interceptors/logging_interceptor.dart';
 
 class DioConfig {
   static Dio createDio({
+    required Ref ref,
     String? baseUrl,
-    String? Function()? getToken,
     Duration? connectTimeout,
     Duration? receiveTimeout,
     Duration? sendTimeout,
@@ -24,7 +25,7 @@ class DioConfig {
     );
 
     dio.interceptors.addAll([
-      AuthInterceptor(getToken: getToken),
+      AuthInterceptor(ref),
       LoggingInterceptor(),
     ]);
 
