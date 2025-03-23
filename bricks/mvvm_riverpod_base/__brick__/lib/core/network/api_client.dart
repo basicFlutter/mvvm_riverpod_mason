@@ -23,7 +23,7 @@ class DioClient implements ApiClient {
   static DioClient get instance {
     _instance ??= DioClient._internal(
       DioConfig.createDio(),
-      NetworkInfoImpl(InternetConnectionChecker.instance),
+      NetworkInfoImpl(InternetConnectionChecker.createInstance()),
     );
     return _instance!;
   }
